@@ -1,0 +1,40 @@
+ef find_free_tables(restaurant_tables, timeslot):
+     # The function find_free_tables takes two parameters: restaurant_tables, a list containing the table availability data, and timeslot, an integer representing the specific time you want to check for free tables. It first checks if the timeslot is valid
+    if timeslot <= 0 or timeslot >= len(restaurant_tables):
+        return "Invalid timeslot"
+    
+    # from the first row of restaurant_tables (skipping the first element, which is an index)
+    table_ids = restaurant_tables[0][1:]  # Skip the index (first element)
+    # Row 'timeslot' contains the availability (free or occupied)
+    availability = restaurant_tables[timeslot][1:]  # Skip the index (first element)
+    
+    # List to hold free table IDs
+    free_tables = []
+    
+    # Iterate through availability to find free tables
+    for index, status in enumerate(availability):
+        if status == 'o':
+            free_tables.append(table_ids[index])
+    
+    return free_tables
+
+# Example usage:
+restaurant_tables2 = [
+    [0,        'T1(2)',  'T2(4)',  'T3(2)',  'T4(6)',  'T5(4)',  'T6(2)'],
+    [1,        'x',      'o',      'o',      'o',      'o',      'x'],
+    [2,        'o',      'x',      'o',      'o',      'x',      'o'],
+    [3,        'x',      'x',      'o',      'x',      'o',      'o'],
+    [4,        'o',      'o',      'o',      'x',      'o',      'x'],
+    [5,        'o',      'x',      'o',      'x',      'o',      'o'],
+    [6,        'o',      'o',      'o',      'o',      'x',      'o']
+]
+
+# Let's say we want to find free tables at timeslot 1
+free_tables_at_time_1 = find_free_tables(restaurant_tables2, 1)
+print("Free tables at timeslot 1:", free_tables_at_time_1)
+
+# Now checking at timeslot 2
+free_tables_at_time_2 = find_free_tables(restaurant_tables2, 2)
+print("Free tables at timeslot 2:", free_tables_at_time_2)
+#The function iterates through the availability list using enumerate, which gives both the index and the status ('o' for open, 'x' for occupied) of each table at the specified timeslot.
+If the status is 'o', the corresponding table ID from table_ids is added to the free_tables list#After checking all the tables, the function returns the free_tables list containing the IDs of all free tables at the given timeslot.
